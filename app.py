@@ -4,7 +4,6 @@ import numpy as np
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
-from datetime import datetime
 
 # Configuration de la page
 st.set_page_config(page_title="Smart City Traffic", layout="wide")
@@ -18,6 +17,9 @@ def load_data():
     df['dayofweek'] = df['date_time'].dt.dayofweek
     df['month'] = df['date_time'].dt.month
     df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
+    # Ajout des noms de jours
+    day_names = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+    df['day_name'] = df['dayofweek'].map(lambda x: day_names[x])
     return df
 
 @st.cache_resource
@@ -65,8 +67,6 @@ elif page == "📊 Exploration":
     
     st.subheader("Valeurs manquantes")
     st.write(df.isnull().sum())
-    st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE VISUALISATIONS ====================
 elif page == "📈 Visualisations":
@@ -97,8 +97,6 @@ elif page == "📈 Visualisations":
     ax3.set_xlabel("Trafic")
     ax3.set_ylabel("Fréquence")
     st.pyplot(fig3)
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE ANALYSE ====================
 elif page == "🔍 Analyse":
@@ -123,14 +121,11 @@ elif page == "🔍 Analyse":
     # Trafic selon jour de semaine
     st.subheader("Trafic moyen par jour")
     day_names = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-    df['day_name'] = df['dayofweek'].map(lambda x: day_names[x])
     daily = df.groupby('day_name')['traffic_volume'].mean().reindex(day_names)
     fig3, ax3 = plt.subplots()
     daily.plot(kind='bar', ax=ax3, color='orange')
     ax3.set_ylabel("Trafic moyen")
     st.pyplot(fig3)
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE MODÉLISATION ====================
 elif page == "🧠 Modélisation":
@@ -159,10 +154,8 @@ elif page == "🧠 Modélisation":
         ax.barh(features, importance, color='purple')
         ax.set_xlabel("Importance")
         st.pyplot(fig)
-        st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
-# ==================== PAGE PRÉDICTION (existant amélioré) ====================
+# ==================== PAGE PRÉDICTION ====================
 elif page == "🚦 Prédiction":
     st.title("Prédiction du volume de trafic")
     col1, col2 = st.columns(2)
@@ -183,8 +176,6 @@ elif page == "🚦 Prédiction":
                                   columns=['hour','dayofweek','temp','rain_1h','snow_1h','clouds_all'])
         pred = model.predict(input_data)[0]
         st.success(f"🚗 Trafic prédit : **{int(pred)}** véhicules/heure")
-        st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE PERFORMANCE ====================
 elif page == "📉 Performance":
@@ -205,24 +196,14 @@ elif page == "📉 Performance":
     (Les résidus sont aléatoires, pas de biais systématique)
     """)
     
-    # Tracé des résidus (simulé à partir des données d'entraînement, optionnel)
-    st.subheader("Distribution des erreurs (simulation)")
-    # On peut générer des résidus approximatifs, mais pour éviter le recalcul, on affiche un message
     st.info("Pour un affichage précis des résidus, il faudrait recalculer sur une base de test. Les métriques ci-dessus proviennent de l'entraînement du modèle.")
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
-# ==================== PAGE DASHBOARD (corrigée) ====================
+# ==================== PAGE DASHBOARD ====================
 elif page == "📊 Dashboard":
     st.header("Dashboard interactif")
     
-    # Création des mappings (locaux pour cette page)
     jour_map = {"Lundi":0, "Mardi":1, "Mercredi":2, "Jeudi":3, "Vendredi":4, "Samedi":5, "Dimanche":6}
     day_names = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
-    
-    # Ajout de la colonne day_name au DataFrame si pas déjà présente
-    if 'day_name' not in df.columns:
-        df['day_name'] = df['dayofweek'].map(lambda x: day_names[x])
     
     # Filtres
     col1, col2 = st.columns(2)
@@ -247,8 +228,6 @@ elif page == "📊 Dashboard":
         st.dataframe(filtered_df.head(200))
     else:
         st.warning("Aucune donnée ne correspond aux filtres sélectionnés.")
-        st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE À PROPOS ====================
 elif page == "ℹ️ À propos":
@@ -263,8 +242,6 @@ elif page == "ℹ️ À propos":
     - **Interface** : Streamlit  
     - **Code source** : [GitHub](https://github.com/MySuccessGate/smartcity-traffic-prediction)
     """)
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE DOCUMENTATION ====================
 elif page == "📚 Documentation":
@@ -286,5 +263,7 @@ elif page == "📚 Documentation":
     - Le modèle ne prend pas en compte les jours fériés (colonne 'holiday' non utilisée).
     - La prédiction est une estimation ; pour une décision réelle, combinez avec d'autres sources.
     """)
+
+# Pied de page dans la barre latérale (optionnel)
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
