@@ -200,31 +200,41 @@ elif page == "📉 Performance":
     # On peut générer des résidus approximatifs, mais pour éviter le recalcul, on affiche un message
     st.info("Pour un affichage précis des résidus, il faudrait recalculer sur une base de test. Les métriques ci-dessus proviennent de l'entraînement du modèle.")
 
-# ==================== PAGE DASHBOARD ====================
+# ==================== PAGE DASHBOARD (corrigée) ====================
 elif page == "📊 Dashboard":
     st.header("Dashboard interactif")
+    
+    # Création des mappings (locaux pour cette page)
+    jour_map = {"Lundi":0, "Mardi":1, "Mercredi":2, "Jeudi":3, "Vendredi":4, "Samedi":5, "Dimanche":6}
+    day_names = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
+    
+    # Ajout de la colonne day_name au DataFrame si pas déjà présente
+    if 'day_name' not in df.columns:
+        df['day_name'] = df['dayofweek'].map(lambda x: day_names[x])
     
     # Filtres
     col1, col2 = st.columns(2)
     with col1:
         selected_hour = st.multiselect("Heure(s)", options=sorted(df['hour'].unique()), default=[8,12,17])
     with col2:
-        selected_days = st.multiselect("Jour(s)", options=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], default=['Lundi','Vendredi'])
+        selected_days = st.multiselect("Jour(s)", options=day_names, default=['Lundi','Vendredi'])
     
     # Filtrage
-    day_map = {v:k for k,v in jour_map.items()}
     filtered_df = df[df['hour'].isin(selected_hour) & df['day_name'].isin(selected_days)]
     
     st.subheader("Trafic moyen par heure (selon filtres)")
-    avg_traffic = filtered_df.groupby('hour')['traffic_volume'].mean().reset_index()
-    fig, ax = plt.subplots()
-    ax.plot(avg_traffic['hour'], avg_traffic['traffic_volume'], marker='o')
-    ax.set_xlabel("Heure")
-    ax.set_ylabel("Trafic moyen")
-    st.pyplot(fig)
-    
-    st.subheader("Données filtrées")
-    st.dataframe(filtered_df.head(200))
+    if not filtered_df.empty:
+        avg_traffic = filtered_df.groupby('hour')['traffic_volume'].mean().reset_index()
+        fig, ax = plt.subplots()
+        ax.plot(avg_traffic['hour'], avg_traffic['traffic_volume'], marker='o')
+        ax.set_xlabel("Heure")
+        ax.set_ylabel("Trafic moyen")
+        st.pyplot(fig)
+        
+        st.subheader("Données filtrées")
+        st.dataframe(filtered_df.head(200))
+    else:
+        st.warning("Aucune donnée ne correspond aux filtres sélectionnés.")
 
 # ==================== PAGE À PROPOS ====================
 elif page == "ℹ️ À propos":
