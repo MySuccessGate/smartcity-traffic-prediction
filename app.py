@@ -243,13 +243,11 @@ elif page == "ℹ️ À propos":
     **Smart City Traffic Prediction**  
     Projet réalisé dans le cadre d'une initiative sur les villes intelligentes.
     
-    - **Auteur** : [Votre nom]  
+    - **Auteur** : **Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist
     - **Données** : Metro Interstate Traffic Volume (UCI / Kaggle)  
     - **Modèle** : XGBoost  
     - **Interface** : Streamlit  
     - **Code source** : [GitHub](https://github.com/MySuccessGate/smartcity-traffic-prediction)
-    
-    **Objectif** : Aider les gestionnaires de trafic à anticiper le volume de véhicules pour optimiser les feux, les itinéraires, et réduire les embouteillages.
     """)
 
 # ==================== PAGE DOCUMENTATION ====================
