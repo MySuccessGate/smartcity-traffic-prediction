@@ -65,6 +65,8 @@ elif page == "📊 Exploration":
     
     st.subheader("Valeurs manquantes")
     st.write(df.isnull().sum())
+    st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE VISUALISATIONS ====================
 elif page == "📈 Visualisations":
@@ -95,6 +97,8 @@ elif page == "📈 Visualisations":
     ax3.set_xlabel("Trafic")
     ax3.set_ylabel("Fréquence")
     st.pyplot(fig3)
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE ANALYSE ====================
 elif page == "🔍 Analyse":
@@ -125,6 +129,8 @@ elif page == "🔍 Analyse":
     daily.plot(kind='bar', ax=ax3, color='orange')
     ax3.set_ylabel("Trafic moyen")
     st.pyplot(fig3)
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE MODÉLISATION ====================
 elif page == "🧠 Modélisation":
@@ -153,6 +159,8 @@ elif page == "🧠 Modélisation":
         ax.barh(features, importance, color='purple')
         ax.set_xlabel("Importance")
         st.pyplot(fig)
+        st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE PRÉDICTION (existant amélioré) ====================
 elif page == "🚦 Prédiction":
@@ -175,6 +183,8 @@ elif page == "🚦 Prédiction":
                                   columns=['hour','dayofweek','temp','rain_1h','snow_1h','clouds_all'])
         pred = model.predict(input_data)[0]
         st.success(f"🚗 Trafic prédit : **{int(pred)}** véhicules/heure")
+        st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE PERFORMANCE ====================
 elif page == "📉 Performance":
@@ -199,6 +209,8 @@ elif page == "📉 Performance":
     st.subheader("Distribution des erreurs (simulation)")
     # On peut générer des résidus approximatifs, mais pour éviter le recalcul, on affiche un message
     st.info("Pour un affichage précis des résidus, il faudrait recalculer sur une base de test. Les métriques ci-dessus proviennent de l'entraînement du modèle.")
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE DASHBOARD (corrigée) ====================
 elif page == "📊 Dashboard":
@@ -235,6 +247,8 @@ elif page == "📊 Dashboard":
         st.dataframe(filtered_df.head(200))
     else:
         st.warning("Aucune donnée ne correspond aux filtres sélectionnés.")
+        st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE À PROPOS ====================
 elif page == "ℹ️ À propos":
@@ -249,6 +263,8 @@ elif page == "ℹ️ À propos":
     - **Interface** : Streamlit  
     - **Code source** : [GitHub](https://github.com/MySuccessGate/smartcity-traffic-prediction)
     """)
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
 
 # ==================== PAGE DOCUMENTATION ====================
 elif page == "📚 Documentation":
@@ -270,3 +286,5 @@ elif page == "📚 Documentation":
     - Le modèle ne prend pas en compte les jours fériés (colonne 'holiday' non utilisée).
     - La prédiction est une estimation ; pour une décision réelle, combinez avec d'autres sources.
     """)
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
