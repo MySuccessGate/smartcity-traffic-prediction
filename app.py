@@ -267,3 +267,16 @@ elif page == "📚 Documentation":
 # Pied de page dans la barre latérale (optionnel)
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Ibrahim OLAOYE** – Ingénieur Statisticien-Économètre | Data Scientist")
+
+# ==================== FOOTER (bas de chaque page) ====================
+st.markdown("---")  # ligne de séparation
+
+footer_html = """
+<div style="text-align: center; color: #6a0dad; font-size: 14px; padding: 20px 0;">
+    <strong>Ibrahim OLAOYE</strong> – Ingénieur Statisticien-Économètre | Data Scientist<br>
+    📧 <a href="mailto:ibolaoye93@gmail.com" style="color: #1E88E5; text-decoration: none;">ibolaoye93@gmail.com</a>
+    &nbsp;|&nbsp;
+    📞 <span style="color: #1E88E5;">+229 0196958344</span>
+</div>
+"""
+st.markdown(footer_html, unsafe_allow_html=True)
