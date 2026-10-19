@@ -14,7 +14,7 @@ model = joblib.load("best_traffic_model.pkl")
 
 @st.cache_data
 def charger_donnees():
-    df = pd.read_csv("data/Metro_Interstate_Traffic_Volume.csv")
+   df = pd.read_csv("Metro_Interstate_Traffic_Volume.csv")
     df['date_time'] = pd.to_datetime(df['date_time'])
     df['hour'] = df['date_time'].dt.hour
     df['dayofweek'] = df['date_time'].dt.dayofweek
