@@ -11,7 +11,7 @@ st.markdown("### Plateforme d'aide à la décision pour la Smart City")
 
 @st.cache_resource
 def charger_et_entrainer():
-    df = pd.read_csv("data/Metro_Interstate_Traffic_Volume.csv")
+   df = pd.read_csv("Metro_Interstate_Traffic_Volume.csv")
     df['date_time'] = pd.to_datetime(df['date_time'])
     df['hour'] = df['date_time'].dt.hour
     df['dayofweek'] = df['date_time'].dt.dayofweek
