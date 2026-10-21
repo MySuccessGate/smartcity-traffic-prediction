@@ -12,10 +12,10 @@ st.markdown("### Plateforme d'aide à la décision pour la Smart City")
 @st.cache_resource
 def charger_et_entrainer():
   df = pd.read_csv("Metro_Interstate_Traffic_Volume.csv")
-    df['date_time'] = pd.to_datetime(df['date_time'])
-    df['hour'] = df['date_time'].dt.hour
-    df['dayofweek'] = df['date_time'].dt.dayofweek
-    df['is_holiday'] = df['holiday'].notna().astype(int)
+  df['date_time'] = pd.to_datetime(df['date_time'])
+  df['hour'] = df['date_time'].dt.hour
+  df['dayofweek'] = df['date_time'].dt.dayofweek
+  df['is_holiday'] = df['holiday'].notna().astype(int)
     
     features = ['hour', 'dayofweek', 'temp', 'rain_1h', 'snow_1h', 'clouds_all', 'is_holiday']
     X = df[features]
